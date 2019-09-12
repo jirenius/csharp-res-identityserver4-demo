@@ -28,6 +28,17 @@ var config = {
 };
 var mgr = new Oidc.UserManager(config);
 
+var ResClient = resclient.default;
+var client = new ResClient('ws://localhost:8080');
+client.setOnConnect(() => mgr.getUser().then(function (user) {
+    if (user) {
+        return client.authenticate('authentication.user', 'jwt', { token: user.access_token })
+            .catch(err => {
+                log("Failed to authenticate: " + err.message);
+            });
+    }
+}));
+
 mgr.getUser().then(function (user) {
     if (user) {
         log("User logged in", user.profile);
@@ -42,16 +53,13 @@ function login() {
 }
 
 function api() {
-    mgr.getUser().then(function (user) {
-        var url = "http://localhost:5001/identity";
-
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", url);
-        xhr.onload = function () {
-            log(xhr.status, JSON.parse(xhr.responseText));
-        }
-        xhr.setRequestHeader("Authorization", "Bearer " + user.access_token);
-        xhr.send();
+    client.get('awesomeTicker.ticker').then(ticker => {
+        log(ticker);
+        ticker.on('change', () => {
+            log(ticker);
+        });
+    }).catch(err => {
+        log("Failed to get ticker: " + err.message);
     });
 }
 
