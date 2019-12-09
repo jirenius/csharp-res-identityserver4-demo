@@ -13,7 +13,7 @@ namespace Authorization
 
             ResService service = new ResService();
             service.AddHandler(">", new DynamicHandler()
-                .SetAccess(req =>
+                .Access(req =>
                 {
                     // Validate the resource is either public, or we have a token, meaning we are logged in.
                     // If needed to, we can check the claims in the token to determine response.

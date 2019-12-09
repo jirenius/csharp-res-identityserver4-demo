@@ -15,7 +15,7 @@ namespace AwesomeTicker
 
             ResService service = new ResService("awesomeTicker");
             service.AddHandler("ticker", new DynamicHandler()
-                .SetModelGet(req => req.Model(new { count = Count })));
+                .ModelGet(req => req.Model(new { count = Count })));
 
             service.Serve("nats://127.0.0.1:4222");
 

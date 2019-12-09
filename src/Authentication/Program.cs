@@ -27,7 +27,7 @@ namespace Authentication
 
             ResService service = new ResService("authentication");
             service.AddHandler("user", new DynamicHandler()
-                .SetAuthMethod("jwt", req =>
+                .AuthMethod("jwt", req =>
                 {
                     string accessToken = (string)req.Params["token"];
                     if (String.IsNullOrEmpty(accessToken))

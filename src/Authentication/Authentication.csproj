@@ -8,7 +8,7 @@
   <ItemGroup>
     <PackageReference Include="IdentityModel" Version="4.0.0" />
     <PackageReference Include="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="5.5.0" />
-    <PackageReference Include="ResgateIO.Service" Version="0.3.1" />
+    <PackageReference Include="ResgateIO.Service" Version="0.4.2" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.5.0" />
   </ItemGroup>
 
