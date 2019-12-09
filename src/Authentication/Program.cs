@@ -27,7 +27,7 @@ namespace Authentication
 
             ResService service = new ResService("authentication");
             service.AddHandler("user", new DynamicHandler()
-                .AuthMethod("jwt", req =>
+                .AuthMethod("jwt", async req =>
                 {
                     string accessToken = (string)req.Params["token"];
                     if (String.IsNullOrEmpty(accessToken))
@@ -40,11 +40,11 @@ namespace Authentication
                     // the access token and to get the user info.
                     // One might also wish to call the IntrospectionEndpoint
                     // to ensure the access token is still active.
-                    var response = client.GetUserInfoAsync(new UserInfoRequest
+                    var response = await client.GetUserInfoAsync(new UserInfoRequest
                     {
                         Address = disco.UserInfoEndpoint,
                         Token = accessToken
-                    }).GetAwaiter().GetResult();
+                    });
 
                     if (response.IsError)
                     {
