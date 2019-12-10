@@ -11,7 +11,9 @@ namespace Authorization
         {
             Console.WriteLine("Authorization microservice");
 
-            ResService service = new ResService();
+            ResService service = new ResService()
+                .SetLogger(new ConsoleLogger(LogLevels.Info | LogLevels.Error));
+
             service.AddHandler(">", new DynamicHandler()
                 .Access(req =>
                 {
@@ -32,7 +34,7 @@ namespace Authorization
 
             while (true)
             {
-                Console.WriteLine(IsPublic ? "Access for everyone" : "Access only for admins");
+                Console.WriteLine(IsPublic ? "Access for everyone" : "Access for logged in users");
                 if (Console.ReadLine() == "QUIT")
                 {
                     break;
